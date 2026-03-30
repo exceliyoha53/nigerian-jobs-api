@@ -1,5 +1,6 @@
 import logging
 from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi.security import OAuth2PasswordRequestForm
 from app.models.schemas import UserRegister, UserLogin, TokenResponse, UserResponse
 from app.auth import hash_password, verify_password, create_access_token, get_current_user
 from app.database import get_connection, return_connection, get_db_cursor
@@ -61,7 +62,7 @@ async def register(user: UserRegister) -> UserResponse:
 
 
 @router.post("/login", response_model=TokenResponse)
-async def login(user: UserLogin) -> TokenResponse:
+async def login(form_data: OAuth2PasswordRequestForm = Depends()) -> TokenResponse:
     """
     Authenticates a user and returns a JWT access token.
     The token must be included in the Authorization header for protected endpoints.
@@ -76,13 +77,15 @@ async def login(user: UserLogin) -> TokenResponse:
     Raises:
         HTTPException 401: If email not found or password is incorrect
     """
+    user_email = form_data.username 
+    user_password = form_data.password
     conn = get_connection()
     cursor = get_db_cursor(conn)
 
     try:
         cursor.execute(
             "SELECT id, email, password_hash, is_subscribed FROM users WHERE email = %s",
-            (user.email,)
+            (user_email,)
         )   
         db_user = cursor.fetchone()
         if not db_user:
@@ -90,15 +93,15 @@ async def login(user: UserLogin) -> TokenResponse:
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid email or password"
             )
-        if not verify_password(user.password, db_user["password_hash"]):
+        if not verify_password(user_password, db_user["password_hash"]):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid email or password"
             )
         
         # password matched — create token with email as the subject
-        token = create_access_token(data={"sub": user.email})
-        logger.info(f"User logged in: {user.email}")
+        token = create_access_token(data={"sub": user_email})
+        logger.info(f"User logged in: {user_email}")
 
         return {"access_token": token, "token_type": "bearer"}
      
@@ -106,7 +109,7 @@ async def login(user: UserLogin) -> TokenResponse:
         raise
 
     except Exception as e:
-        logger.error(f"Login error for {user.email}: {e}")
+        logger.error(f"Login error for {user_email}: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Login Failed"

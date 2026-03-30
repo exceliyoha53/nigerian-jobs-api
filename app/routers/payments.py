@@ -75,7 +75,7 @@ async def subscribe(current_user: dict = Depends(get_current_user)) -> PaymentIn
                 status_code=status.HTTP_502_BAD_GATEWAY,
                 detail="Payment initialization failed. Try again later."
             )
-        logger.info(f"Payment initialized for {current_user["email"]}")
+        logger.info(f"Payment initialized for {current_user['email']}")
         
         return {
             "authorization_url": paystack_data["data"]["authorization_url"],
