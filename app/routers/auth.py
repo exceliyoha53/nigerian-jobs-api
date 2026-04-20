@@ -65,17 +65,21 @@ async def register(user: UserRegister) -> UserResponse:
 async def login(form_data: OAuth2PasswordRequestForm = Depends()) -> TokenResponse:
     """
     Authenticates a user and returns a JWT access token.
+    
     The token must be included in the Authorization header for protected endpoints.
     Header format: Authorization: Bearer <token>
 
     Parameters:
-        user (UserLogin): Request body with email and password
+        form_data (OAuth2PasswordRequestForm): Form-encoded data containing:
+            - username: The user's email address.
+            - password: The user's plain-text password.
 
     Returns:
-        TokenResponse: JWT access token and token type
+        TokenResponse: A dictionary containing the 'access_token' and 'token_type'.
 
     Raises:
-        HTTPException 401: If email not found or password is incorrect
+        HTTPException 401: If the email is not found or the password is incorrect.
+        HTTPException 500: If a database or server-side error occurs during login.
     """
     user_email = form_data.username 
     user_password = form_data.password
