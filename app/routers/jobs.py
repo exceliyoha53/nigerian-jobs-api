@@ -1,8 +1,9 @@
 import logging
-from fastapi import APIRouter, HTTPException, status, Depends, Query  # Query handles URL params
+from fastapi import APIRouter, HTTPException, status, Depends, Query, Request  # Query handles URL params
 from app.models.schemas import JobsListResponse
 from app.auth import get_current_user
 from app.database import get_connection, return_connection, get_db_cursor
+from app.limiter import limiter
 
 logger = logging.getLogger(__name__)
 
@@ -39,9 +40,12 @@ def check_subscription(conn, email: str) -> None:
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Active subscription required. Visit /payments/subscribe to unlock access."
         )
+    
 
+@limiter.limit("30/minute") # Only allow 30 requests per minute per IP
 @router.get("/", response_model=JobsListResponse)
 async def get_jobs(
+    request: Request,
     page: int = Query(default=1, ge=1, description="Page number, starts at 1"),
     per_page: int = Query(default=10, ge=1, le=50, description="Jobs per page, max 50"),
     location: str = Query(default=None, description="Filter by location keyword e.g Lagos,"),
