@@ -1,12 +1,13 @@
 import logging
 import sys
 from contextlib import asynccontextmanager   # for startup/shutdown lifecycle
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware  # handles cross-origin requests(Cross Origin Resource Sharing)
 from dotenv import load_dotenv
 
 from app.routers import auth, jobs, payments
 from app.database import connection_pool  # we need to close on shutdown
+from fastapi.responses import JSONResponse
 
 load_dotenv()
 
@@ -79,3 +80,11 @@ async def health_check():
         "database": "connected",
         "version": "1.0.0"
     }
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    logger.error(f"Unhandled exception: {exc}", exc_info=True)
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "An unexpected error occurred. Our team has been notified."}
+    )

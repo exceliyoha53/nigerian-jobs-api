@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nigerian Jobs API</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    background: #0a0f1e;
+    color: #e2e8f0;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+}
+.hero {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 24px 60px;
+    text-align: center;
+}
+.badge {
+    display: inline-block;
+    background: rgba(99,102,241,0.15);
+    border: 1px solid rgba(99,102,241,0.4);
+    color: #818cf8;
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 28px;
+    letter-spacing: 1px;
+}
+h1 {
+    font-size: 52px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+h1 span { color: #6366f1; }
+.sub {
+    font-size: 18px;
+    color: #64748b;
+    max-width: 500px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+    font-weight: 300;
+}
+.actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.btn-primary {
+    background: #6366f1;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.btn-primary:hover { background: #4f46e5; transform: translateY(-1px); }
+.btn-outline {
+    background: transparent;
+    color: #e2e8f0;
+    border: 1px solid #252840;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.btn-outline:hover { border-color: #6366f1; color: #818cf8; }
+.endpoints {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+}
+.section-title {
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #6366f1;
+    margin-bottom: 24px;
+    text-align: center;
+}
+.endpoint-list {
+    background: #13151f;
+    border: 1px solid #252840;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.endpoint {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 24px;
+    border-bottom: 1px solid #1a1d2e;
+}
+.endpoint:last-child { border-bottom: none; }
+.method {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    min-width: 52px;
+    text-align: center;
+}
+.get { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
+.post { background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); }
+.path {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #e2e8f0;
+    min-width: 220px;
+}
+.desc { font-size: 13px; color: #64748b; }
+.pricing {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+    text-align: center;
+}
+.price-card {
+    background: #13151f;
+    border: 1px solid #252840;
+    border-radius: 12px;
+    padding: 40px;
+    display: inline-block;
+    max-width: 360px;
+    width: 100%;
+}
+.price { font-size: 48px; font-weight: 800; color: #e2e8f0; letter-spacing: -1px; }
+.price span { font-size: 20px; color: #64748b; font-weight: 300; }
+.price-sub { color: #64748b; font-size: 14px; margin: 8px 0 24px; }
+.feature-list { text-align: left; margin-bottom: 28px; }
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #94a3b8;
+    padding: 6px 0;
+}
+.feature::before { content: '✓'; color: #10b981; font-weight: 700; }
+footer {
+    border-top: 1px solid #252840;
+    padding: 24px;
+    text-align: center;
+    font-size: 13px;
+    color: #374151;
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="badge">LIVE API · Nigerian Job Market</div>
+    <h1>Nigerian Jobs<br><span>API as a Service</span></h1>
+    <p class="sub">
+        Live-scraped job listings from across Nigeria's job market.
+        Paginated, filterable, always fresh. Pay once, access everything.
+    </p>
+    <div class="actions">
+        <a href="/docs" class="btn-primary">View API Docs</a>
+        <a href="/auth/register" class="btn-outline">Get API Access</a>
+    </div>
+</div>
+
+<div class="endpoints">
+    <div class="section-title">Endpoints</div>
+    <div class="endpoint-list">
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="path">/auth/register</span>
+            <span class="desc">Create your account</span>
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="path">/auth/login</span>
+            <span class="desc">Get your JWT access token</span>
+        </div>
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/jobs</span>
+            <span class="desc">Paginated job listings</span>
+        </div>
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/jobs?location=Lagos</span>
+            <span class="desc">Filter by any Nigerian city</span>
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="path">/payments/subscribe</span>
+            <span class="desc">Unlock access via Paystack</span>
+        </div>
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/payments/verify</span>
+            <span class="desc">Confirm payment, activate access</span>
+        </div>
+    </div>
+</div>
+
+<div class="pricing">
+    <div class="section-title" style="margin-bottom:32px">Pricing</div>
+    <div class="price-card">
+        <div class="price">₦5,000 <span>/ month</span></div>
+        <div class="price-sub">Billed monthly via Paystack</div>
+        <div class="feature-list">
+            <div class="feature">Unlimited API calls</div>
+            <div class="feature">Jobs updated every 6 hours</div>
+            <div class="feature">Filter by location, keyword</div>
+            <div class="feature">Pagination up to 50 per page</div>
+            <div class="feature">JSON responses</div>
+            <div class="feature">Swagger documentation</div>
+        </div>
+        <a href="/auth/register" class="btn-primary" style="display:block;text-align:center">
+            Start Free Trial
+        </a>
+    </div>
+</div>
+
+<footer>Built by Excel Iyoha · Nigerian Jobs API · 2026</footer>
+
+</body>
+</html>
