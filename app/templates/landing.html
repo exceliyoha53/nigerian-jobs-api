@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nigerian Jobs API</title>
+<title>Nigerian Jobs API | Portfolio Project</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -40,12 +40,12 @@ h1 {
 }
 h1 span { color: #6366f1; }
 .sub {
-    font-size: 18px;
-    color: #64748b;
-    max-width: 500px;
+    font-size: 16px;
+    color: #94a3b8;
+    max-width: 600px;
     margin: 0 auto 40px;
     line-height: 1.7;
-    font-weight: 300;
+    font-weight: 400;
 }
 .actions {
     display: flex;
@@ -64,18 +64,6 @@ h1 span { color: #6366f1; }
     transition: all 0.2s;
 }
 .btn-primary:hover { background: #4f46e5; transform: translateY(-1px); }
-.btn-outline {
-    background: transparent;
-    color: #e2e8f0;
-    border: 1px solid #252840;
-    padding: 14px 28px;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 15px;
-    text-decoration: none;
-    transition: all 0.2s;
-}
-.btn-outline:hover { border-color: #6366f1; color: #818cf8; }
 .endpoints {
     max-width: 800px;
     margin: 0 auto;
@@ -133,12 +121,12 @@ h1 span { color: #6366f1; }
     border-radius: 12px;
     padding: 40px;
     display: inline-block;
-    max-width: 360px;
+    max-width: 380px;
     width: 100%;
 }
-.price { font-size: 48px; font-weight: 800; color: #e2e8f0; letter-spacing: -1px; }
-.price span { font-size: 20px; color: #64748b; font-weight: 300; }
-.price-sub { color: #64748b; font-size: 14px; margin: 8px 0 24px; }
+.price { font-size: 42px; font-weight: 800; color: #e2e8f0; letter-spacing: -1px; }
+.price span { font-size: 18px; color: #64748b; font-weight: 300; }
+.price-sub { color: #94a3b8; font-size: 14px; margin: 12px 0 24px; line-height: 1.5; }
 .feature-list { text-align: left; margin-bottom: 28px; }
 .feature {
     display: flex;
@@ -154,81 +142,90 @@ footer {
     padding: 24px;
     text-align: center;
     font-size: 13px;
-    color: #374151;
+    color: #64748b;
+}
+
+/* Mobile Responsiveness for Android/iOS */
+@media (max-width: 600px) {
+    .hero { padding: 40px 20px; }
+    h1 { font-size: 38px; }
+    .sub { font-size: 15px; }
+    .endpoint { flex-direction: column; align-items: flex-start; gap: 8px; padding: 16px; }
+    .path { min-width: auto; word-break: break-all; }
+    .price-card { padding: 24px; }
+    .price { font-size: 36px; }
 }
 </style>
 </head>
 <body>
 
 <div class="hero">
-    <div class="badge">LIVE API · Nigerian Job Market</div>
-    <h1>Nigerian Jobs<br><span>API as a Service</span></h1>
+    <div class="badge">DEVELOPER PORTFOLIO</div>
+    <h1>Nigerian Jobs<br><span>API Architecture</span></h1>
     <p class="sub">
-        Live-scraped job listings from across Nigeria's job market.
-        Paginated, filterable, always fresh. Pay once, access everything.
+        I built this project to demonstrate production-grade API design, JWT authentication, and Paystack integration. 
+        <strong>It is currently in Test Mode.</strong> Feel free to use test cards to subscribe and explore the live-scraped job data completely for free.
     </p>
     <div class="actions">
-        <a href="/docs" class="btn-primary">View API Docs</a>
-        <a href="/auth/register" class="btn-outline">Get API Access</a>
+        <a href="/docs" class="btn-primary">Test the API in Swagger UI</a>
     </div>
 </div>
 
 <div class="endpoints">
-    <div class="section-title">Endpoints</div>
+    <div class="section-title">Core Endpoints</div>
     <div class="endpoint-list">
         <div class="endpoint">
             <span class="method post">POST</span>
             <span class="path">/auth/register</span>
-            <span class="desc">Create your account</span>
+            <span class="desc">Create a user account</span>
         </div>
         <div class="endpoint">
             <span class="method post">POST</span>
             <span class="path">/auth/login</span>
-            <span class="desc">Get your JWT access token</span>
+            <span class="desc">Generate JWT access token</span>
         </div>
         <div class="endpoint">
             <span class="method get">GET</span>
             <span class="path">/jobs</span>
-            <span class="desc">Paginated job listings</span>
+            <span class="desc">Fetch paginated job listings</span>
         </div>
         <div class="endpoint">
             <span class="method get">GET</span>
             <span class="path">/jobs?location=Lagos</span>
-            <span class="desc">Filter by any Nigerian city</span>
+            <span class="desc">Filter jobs by Nigerian city</span>
         </div>
         <div class="endpoint">
             <span class="method post">POST</span>
             <span class="path">/payments/subscribe</span>
-            <span class="desc">Unlock access via Paystack</span>
+            <span class="desc">Initialize Paystack test checkout</span>
         </div>
         <div class="endpoint">
             <span class="method get">GET</span>
             <span class="path">/payments/verify</span>
-            <span class="desc">Confirm payment, activate access</span>
+            <span class="desc">Unlock account via test payment</span>
         </div>
     </div>
 </div>
 
 <div class="pricing">
-    <div class="section-title" style="margin-bottom:32px">Pricing</div>
+    <div class="section-title" style="margin-bottom:32px">Access Status</div>
     <div class="price-card">
-        <div class="price">₦5,000 <span>/ month</span></div>
-        <div class="price-sub">Billed monthly via Paystack</div>
+        <div class="price">Free <span>(Test Mode)</span></div>
+        <div class="price-sub">This system uses Paystack's sandbox. Register an account and use standard test credentials to simulate a subscription.</div>
         <div class="feature-list">
-            <div class="feature">Unlimited API calls</div>
-            <div class="feature">Jobs updated every 6 hours</div>
-            <div class="feature">Filter by location, keyword</div>
-            <div class="feature">Pagination up to 50 per page</div>
-            <div class="feature">JSON responses</div>
-            <div class="feature">Swagger documentation</div>
+            <div class="feature">JWT Authentication flow</div>
+            <div class="feature">Real PostgreSQL database</div>
+            <div class="feature">Rate limited (SlowAPI)</div>
+            <div class="feature">Simulated Paystack webhooks</div>
+            <div class="feature">Always-fresh scraped data</div>
         </div>
-        <a href="/auth/register" class="btn-primary" style="display:block;text-align:center">
-            Start Free Trial
+        <a href="/docs" class="btn-primary" style="display:block;text-align:center">
+            Open Interactive Docs
         </a>
     </div>
 </div>
 
-<footer>Built by Excel Iyoha · Nigerian Jobs API · 2026</footer>
+<footer>Built by Excel Iyoha · Backend Engineering Sprint · 2026</footer>
 
 </body>
 </html>
